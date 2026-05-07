@@ -29,7 +29,7 @@ function Index() {
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
         </div>
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:py-32 lg:px-8">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1.2fr_1fr] lg:py-28 lg:px-8">
           <div className="max-w-3xl">
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-secondary/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-foreground backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Temporada 2026
