@@ -9,38 +9,120 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppPatotasRouteImport } from './routes/app.patotas'
+import { Route as AppMuralRouteImport } from './routes/app.mural'
+import { Route as AppMembrosRouteImport } from './routes/app.membros'
+import { Route as AppJogosRouteImport } from './routes/app.jogos'
 
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPatotasRoute = AppPatotasRouteImport.update({
+  id: '/patotas',
+  path: '/patotas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMuralRoute = AppMuralRouteImport.update({
+  id: '/mural',
+  path: '/mural',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMembrosRoute = AppMembrosRouteImport.update({
+  id: '/membros',
+  path: '/membros',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppJogosRoute = AppJogosRouteImport.update({
+  id: '/jogos',
+  path: '/jogos',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/app/jogos': typeof AppJogosRoute
+  '/app/membros': typeof AppMembrosRoute
+  '/app/mural': typeof AppMuralRoute
+  '/app/patotas': typeof AppPatotasRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/jogos': typeof AppJogosRoute
+  '/app/membros': typeof AppMembrosRoute
+  '/app/mural': typeof AppMuralRoute
+  '/app/patotas': typeof AppPatotasRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/app/jogos': typeof AppJogosRoute
+  '/app/membros': typeof AppMembrosRoute
+  '/app/mural': typeof AppMuralRoute
+  '/app/patotas': typeof AppPatotasRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/app/jogos'
+    | '/app/membros'
+    | '/app/mural'
+    | '/app/patotas'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/app/jogos'
+    | '/app/membros'
+    | '/app/mural'
+    | '/app/patotas'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/app/jogos'
+    | '/app/membros'
+    | '/app/mural'
+    | '/app/patotas'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +130,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/patotas': {
+      id: '/app/patotas'
+      path: '/patotas'
+      fullPath: '/app/patotas'
+      preLoaderRoute: typeof AppPatotasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/mural': {
+      id: '/app/mural'
+      path: '/mural'
+      fullPath: '/app/mural'
+      preLoaderRoute: typeof AppMuralRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/membros': {
+      id: '/app/membros'
+      path: '/membros'
+      fullPath: '/app/membros'
+      preLoaderRoute: typeof AppMembrosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/jogos': {
+      id: '/app/jogos'
+      path: '/jogos'
+      fullPath: '/app/jogos'
+      preLoaderRoute: typeof AppJogosRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppJogosRoute: typeof AppJogosRoute
+  AppMembrosRoute: typeof AppMembrosRoute
+  AppMuralRoute: typeof AppMuralRoute
+  AppPatotasRoute: typeof AppPatotasRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppJogosRoute: AppJogosRoute,
+  AppMembrosRoute: AppMembrosRoute,
+  AppMuralRoute: AppMuralRoute,
+  AppPatotasRoute: AppPatotasRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
