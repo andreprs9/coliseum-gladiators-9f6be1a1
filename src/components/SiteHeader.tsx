@@ -32,14 +32,9 @@ export function SiteFooter() {
     <footer className="border-t border-border bg-foreground text-background">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-3 lg:px-8">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-accent text-accent-foreground">
-              <Shield className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <div className="leading-none">
-              <span className="block font-display text-base font-bold tracking-wider">GLADIATORS</span>
-              <span className="block text-[10px] uppercase tracking-[0.25em] text-background/60">Futebol Americano</span>
-            </div>
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="" aria-hidden="true" width={400} height={200} className="h-11 w-auto brightness-0 invert" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-background/60">Futebol Americano</span>
           </div>
           <p className="mt-4 max-w-sm text-sm text-background/70">
             15 anos construindo uma trajetória marcada por paixão, determinação e momentos memoráveis no futebol americano.
