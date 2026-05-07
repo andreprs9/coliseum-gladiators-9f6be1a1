@@ -61,6 +61,16 @@ function Index() {
               ))}
             </dl>
           </div>
+          <div className="relative hidden lg:block">
+            <div className="absolute -inset-12 rounded-full bg-accent/20 blur-3xl" aria-hidden="true" />
+            <img
+              src={logo}
+              alt="Escudo do Gladiators Futebol Americano"
+              width={400}
+              height={200}
+              className="relative mx-auto w-full max-w-md drop-shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+            />
+          </div>
         </div>
       </section>
 
