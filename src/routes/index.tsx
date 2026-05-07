@@ -3,15 +3,15 @@ import heroImg from "@/assets/hero.jpg";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, MessageSquare, Users2, CalendarRange, Accessibility, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Trophy, Users, Calendar, Flame, Shield, Swords } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Patota — Gestão colaborativa e acessível de patotas de futebol" },
-      { name: "description", content: "Solução colaborativa, gratuita e acessível para conectar e organizar patotas de futebol, baseada no Modelo 3C, Material Design, Heurísticas de Nielsen e WCAG." },
-      { property: "og:title", content: "Patota — Gestão colaborativa e acessível de patotas de futebol" },
-      { property: "og:description", content: "Conecte, coordene e jogue. Inclusão e acessibilidade no centro do projeto." },
+      { title: "Gladiators Futebol Americano — 15 anos de história" },
+      { name: "description", content: "Site oficial do Gladiators Futebol Americano. Conheça o time, o elenco, o calendário de jogos e faça parte dessa trajetória." },
+      { property: "og:title", content: "Gladiators Futebol Americano" },
+      { property: "og:description", content: "Paixão, determinação e momentos memoráveis. Bem-vindo ao Gladiators." },
     ],
   }),
   component: Index,
@@ -24,83 +24,87 @@ function Index() {
 
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:py-24 lg:px-8">
-          <div className="flex flex-col justify-center">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-secondary px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-              Atividade de Extensão · v1
+        <div className="absolute inset-0">
+          <img src={heroImg} alt="" aria-hidden="true" width={1600} height={1100} className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        </div>
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:py-32 lg:px-8">
+          <div className="max-w-3xl">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-secondary/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-foreground backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Temporada 2026
             </span>
-            <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-6xl lg:text-7xl">
-              A patota toda jogando <span className="text-accent">junta</span>.
+            <h1 className="mt-6 font-display text-6xl font-bold leading-[0.95] tracking-tight text-balance sm:text-7xl lg:text-8xl">
+              Honra. <span className="text-accent">Garra.</span><br />Gladiators.
             </h1>
             <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-              Uma solução colaborativa, gratuita e acessível para conectar membros, coordenar jogos e fortalecer a comunidade do futebol amador.
+              15 anos construindo uma das histórias mais marcantes do futebol americano. Bem-vindo à arena.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link to="/app">Abrir protótipo <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" /></Link>
+                <Link to="/calendario">Ver próximo jogo <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" /></Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link to="/metodologia">Ver metodologia</Link>
+                <Link to="/time">Conheça o time</Link>
               </Button>
             </div>
-            <dl className="mt-12 grid grid-cols-3 gap-6 border-t border-border pt-8">
+            <dl className="mt-14 grid max-w-lg grid-cols-3 gap-6 border-t border-border pt-8">
               {[
-                { k: "3C", v: "Modelo de Colaboração" },
-                { k: "WCAG", v: "Diretrizes de Acessibilidade" },
-                { k: "M3", v: "Material Design + Nielsen" },
+                { k: "15", v: "Anos de história" },
+                { k: "60+", v: "Atletas no elenco" },
+                { k: "2x", v: "Campeão estadual" },
               ].map((s) => (
-                <div key={s.k}>
-                  <dt className="font-display text-2xl font-semibold">{s.k}</dt>
-                  <dd className="text-xs text-muted-foreground">{s.v}</dd>
+                <div key={s.v}>
+                  <dt className="font-display text-3xl font-bold text-accent">{s.k}</dt>
+                  <dd className="text-xs uppercase tracking-wider text-muted-foreground">{s.v}</dd>
                 </div>
               ))}
             </dl>
           </div>
-          <div className="relative">
-            <div className="absolute inset-0 -z-10 bg-grid opacity-60" aria-hidden="true" />
-            <div className="relative overflow-hidden rounded-2xl border border-border shadow-2xl">
-              <img
-                src={heroImg}
-                alt="Grupo de jogadores amadores se reunindo num campo de futebol urbano ao entardecer"
-                width={1600}
-                height={1100}
-                className="h-full w-full object-cover"
-              />
-              <div className="absolute bottom-4 left-4 rounded-md bg-background/95 px-3 py-2 text-xs shadow-lg ring-1 ring-border">
-                <p className="font-display font-semibold">Quarta no Sintético</p>
-                <p className="text-muted-foreground">9/14 confirmados · 19h30</p>
-              </div>
-              <div className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground shadow-lg">
-                <Sparkles className="h-3.5 w-3.5" aria-hidden="true" /> Acessível por padrão
-              </div>
+        </div>
+      </section>
+
+      {/* Next game banner */}
+      <section className="border-b border-border bg-foreground text-background">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:px-8">
+          <div className="flex items-center gap-5">
+            <Flame className="h-10 w-10 text-accent" aria-hidden="true" />
+            <div>
+              <p className="text-xs uppercase tracking-[0.25em] text-background/60">Próximo jogo</p>
+              <p className="font-display text-2xl font-bold sm:text-3xl">Gladiators × Centurions</p>
+              <p className="text-sm text-background/70">Sáb, 23 mai · 16h00 · Arena Municipal</p>
             </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Button asChild variant="outline" className="border-background/30 bg-transparent text-background hover:bg-background hover:text-foreground">
+              <Link to="/calendario">Calendário completo</Link>
+            </Button>
+            <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
+              <a href="#ingressos">Comprar ingresso</a>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* M3C pillars */}
-      <section className="border-b border-border bg-secondary/40">
+      {/* Pillars */}
+      <section className="border-b border-border">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Modelo 3C de Colaboração</p>
-            <h2 className="mt-3 font-display text-4xl font-semibold tracking-tight">Comunicação, Cooperação e Coordenação.</h2>
-            <p className="mt-4 text-muted-foreground">
-              Toda funcionalidade é desenhada a partir dos três pilares do M3C, com mecanismo de percepção integrado para que ninguém fique de fora da jogada.
-            </p>
+            <p className="text-xs uppercase tracking-[0.25em] text-accent">O que nos move</p>
+            <h2 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">Mais que um time. Uma irmandade.</h2>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {[
-              { i: MessageSquare, t: "Comunicação", d: "Mural, comentários e avisos para alinhar expectativas e combinar a próxima pelada." },
-              { i: Users2, t: "Cooperação", d: "Divisão de times, materiais compartilhados e tarefas distribuídas pelo grupo." },
-              { i: CalendarRange, t: "Coordenação", d: "Agenda, presenças, local e horário — visíveis para todos, em tempo real." },
+              { i: Shield, t: "Tradição", d: "Uma trajetória de 15 anos forjada em treinos duros, jogos memoráveis e atletas que viraram lenda." },
+              { i: Swords, t: "Disciplina", d: "Treinamento de alto rendimento, comissão técnica completa e mentalidade de competição." },
+              { i: Trophy, t: "Conquistas", d: "Títulos, classificações nacionais e atletas convocados para a seleção brasileira." },
             ].map((p) => (
-              <Card key={p.t} className="border-l-4 border-l-accent">
+              <Card key={p.t} className="group overflow-hidden border-l-4 border-l-accent transition-colors hover:bg-secondary/40">
                 <CardContent className="p-6">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-foreground text-background">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-md bg-foreground text-background">
                     <p.i className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <h3 className="mt-4 font-display text-xl font-semibold">{p.t}</h3>
+                  <h3 className="mt-5 font-display text-2xl font-bold">{p.t}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{p.d}</p>
                 </CardContent>
               </Card>
@@ -109,48 +113,37 @@ function Index() {
         </div>
       </section>
 
-      {/* Accessibility band */}
-      <section className="border-b border-border">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8">
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Inclusão como diferencial</p>
-            <h2 className="mt-3 font-display text-4xl font-semibold tracking-tight">Acessibilidade não é um adicional — é o ponto de partida.</h2>
-            <p className="mt-4 text-muted-foreground">
-              Construímos cada interface seguindo as diretrizes do <strong>WCAG 2.1</strong>, padrões do <strong>Material Design</strong> e as <strong>10 Heurísticas de Nielsen</strong>, garantindo usabilidade e experiência de uso para pessoas com diferentes necessidades.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm">
-              {[
-                "Contraste AA garantido em todos os componentes",
-                "Navegação completa por teclado e leitor de tela",
-                "Áreas de toque generosas e tipografia legível",
-                "Mensagens claras de erro e prevenção de engano",
-              ].map((it) => (
-                <li key={it} className="flex items-start gap-3">
-                  <ShieldCheck className="mt-0.5 h-4 w-4 text-accent" aria-hidden="true" />
-                  <span>{it}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8">
-              <Button asChild variant="outline">
-                <Link to="/acessibilidade">Como aplicamos WCAG <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" /></Link>
-              </Button>
+      {/* Squad teaser */}
+      <section className="border-b border-border bg-secondary/40">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-xl">
+              <p className="text-xs uppercase tracking-[0.25em] text-accent">Elenco 2026</p>
+              <h2 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">Os guerreiros em campo.</h2>
+              <p className="mt-4 text-muted-foreground">Conheça alguns dos atletas que vestem a armadura preta e vermelha nesta temporada.</p>
             </div>
+            <Button asChild variant="outline">
+              <Link to="/elenco">Ver elenco completo <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" /></Link>
+            </Button>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { k: "1.4.3", v: "Contraste mínimo" },
-              { k: "2.1.1", v: "Teclado" },
-              { k: "2.4.7", v: "Foco visível" },
-              { k: "3.3.1", v: "Identificação de erro" },
-              { k: "4.1.2", v: "Nome, papel, valor" },
-              { k: "1.3.1", v: "Info e relações" },
-            ].map((c) => (
-              <Card key={c.k}>
-                <CardContent className="p-5">
-                  <Accessibility className="h-5 w-5 text-accent" aria-hidden="true" />
-                  <p className="mt-3 font-display text-2xl font-semibold">{c.k}</p>
-                  <p className="text-xs text-muted-foreground">{c.v}</p>
+              { n: "Marcus Vega", p: "QB", num: 7 },
+              { n: "Diego Ribeiro", p: "RB", num: 23 },
+              { n: "Caio Mendonça", p: "WR", num: 88 },
+              { n: "Rafael Drummond", p: "DE", num: 55 },
+            ].map((pl) => (
+              <Card key={pl.n} className="overflow-hidden bg-foreground text-background">
+                <CardContent className="relative p-0">
+                  <div className="aspect-[3/4] bg-gradient-to-br from-accent/30 via-foreground to-foreground p-6 flex flex-col justify-between">
+                    <div>
+                      <p className="font-display text-7xl font-black leading-none text-background/90">#{pl.num}</p>
+                      <p className="mt-2 inline-block rounded bg-accent px-2 py-0.5 text-xs font-bold tracking-wider text-accent-foreground">{pl.p}</p>
+                    </div>
+                    <div>
+                      <p className="font-display text-2xl font-bold leading-tight">{pl.n}</p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -159,15 +152,21 @@ function Index() {
       </section>
 
       {/* CTA */}
-      <section className="gradient-hero text-primary-foreground">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 py-16 sm:px-6 lg:flex-row lg:items-center lg:px-8">
-          <div>
-            <h2 className="font-display text-4xl font-semibold tracking-tight">Pronto para reunir a sua patota?</h2>
-            <p className="mt-2 text-primary-foreground/80">Explore o protótipo navegável e veja como o app organiza tudo — sem custo e sem deixar ninguém de fora.</p>
+      <section id="ingressos" className="gradient-hero text-primary-foreground">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 py-20 sm:px-6 lg:flex-row lg:items-center lg:px-8">
+          <div className="max-w-2xl">
+            <p className="text-xs uppercase tracking-[0.25em] text-accent">Junte-se à torcida</p>
+            <h2 className="mt-3 font-display text-4xl font-bold tracking-tight sm:text-5xl">Vista a armadura. Faça parte da história.</h2>
+            <p className="mt-4 text-primary-foreground/80">Atleta, torcedor ou patrocinador — há sempre um lugar na arena para quem vibra com o Gladiators.</p>
           </div>
-          <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-            <Link to="/app">Abrir protótipo <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" /></Link>
-          </Button>
+          <div className="flex flex-wrap items-center gap-3">
+            <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+              <Link to="/contato">Quero jogar</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="border-background/30 bg-transparent text-primary-foreground hover:bg-background hover:text-foreground">
+              <Link to="/contato">Patrocinar</Link>
+            </Button>
+          </div>
         </div>
       </section>
 

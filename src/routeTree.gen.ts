@@ -9,23 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TimeRouteImport } from './routes/time'
+import { Route as ElencoRouteImport } from './routes/elenco'
 import { Route as ContatoRouteImport } from './routes/contato'
-import { Route as AppRouteImport } from './routes/app'
+import { Route as CalendarioRouteImport } from './routes/calendario'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AppIndexRouteImport } from './routes/app.index'
-import { Route as AppPatotasRouteImport } from './routes/app.patotas'
-import { Route as AppMuralRouteImport } from './routes/app.mural'
-import { Route as AppMembrosRouteImport } from './routes/app.membros'
-import { Route as AppJogosRouteImport } from './routes/app.jogos'
 
+const TimeRoute = TimeRouteImport.update({
+  id: '/time',
+  path: '/time',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ElencoRoute = ElencoRouteImport.update({
+  id: '/elenco',
+  path: '/elenco',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContatoRoute = ContatoRouteImport.update({
   id: '/contato',
   path: '/contato',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRoute = AppRouteImport.update({
-  id: '/app',
-  path: '/app',
+const CalendarioRoute = CalendarioRouteImport.update({
+  id: '/calendario',
+  path: '/calendario',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -33,102 +40,61 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppIndexRoute = AppIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppPatotasRoute = AppPatotasRouteImport.update({
-  id: '/patotas',
-  path: '/patotas',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppMuralRoute = AppMuralRouteImport.update({
-  id: '/mural',
-  path: '/mural',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppMembrosRoute = AppMembrosRouteImport.update({
-  id: '/membros',
-  path: '/membros',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppJogosRoute = AppJogosRouteImport.update({
-  id: '/jogos',
-  path: '/jogos',
-  getParentRoute: () => AppRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/app': typeof AppRouteWithChildren
+  '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
-  '/app/jogos': typeof AppJogosRoute
-  '/app/membros': typeof AppMembrosRoute
-  '/app/mural': typeof AppMuralRoute
-  '/app/patotas': typeof AppPatotasRoute
-  '/app/': typeof AppIndexRoute
+  '/elenco': typeof ElencoRoute
+  '/time': typeof TimeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
-  '/app/jogos': typeof AppJogosRoute
-  '/app/membros': typeof AppMembrosRoute
-  '/app/mural': typeof AppMuralRoute
-  '/app/patotas': typeof AppPatotasRoute
-  '/app': typeof AppIndexRoute
+  '/elenco': typeof ElencoRoute
+  '/time': typeof TimeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/app': typeof AppRouteWithChildren
+  '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
-  '/app/jogos': typeof AppJogosRoute
-  '/app/membros': typeof AppMembrosRoute
-  '/app/mural': typeof AppMuralRoute
-  '/app/patotas': typeof AppPatotasRoute
-  '/app/': typeof AppIndexRoute
+  '/elenco': typeof ElencoRoute
+  '/time': typeof TimeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/app'
-    | '/contato'
-    | '/app/jogos'
-    | '/app/membros'
-    | '/app/mural'
-    | '/app/patotas'
-    | '/app/'
+  fullPaths: '/' | '/calendario' | '/contato' | '/elenco' | '/time'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/contato'
-    | '/app/jogos'
-    | '/app/membros'
-    | '/app/mural'
-    | '/app/patotas'
-    | '/app'
-  id:
-    | '__root__'
-    | '/'
-    | '/app'
-    | '/contato'
-    | '/app/jogos'
-    | '/app/membros'
-    | '/app/mural'
-    | '/app/patotas'
-    | '/app/'
+  to: '/' | '/calendario' | '/contato' | '/elenco' | '/time'
+  id: '__root__' | '/' | '/calendario' | '/contato' | '/elenco' | '/time'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AppRoute: typeof AppRouteWithChildren
+  CalendarioRoute: typeof CalendarioRoute
   ContatoRoute: typeof ContatoRoute
+  ElencoRoute: typeof ElencoRoute
+  TimeRoute: typeof TimeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/time': {
+      id: '/time'
+      path: '/time'
+      fullPath: '/time'
+      preLoaderRoute: typeof TimeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/elenco': {
+      id: '/elenco'
+      path: '/elenco'
+      fullPath: '/elenco'
+      preLoaderRoute: typeof ElencoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contato': {
       id: '/contato'
       path: '/contato'
@@ -136,11 +102,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContatoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app': {
-      id: '/app'
-      path: '/app'
-      fullPath: '/app'
-      preLoaderRoute: typeof AppRouteImport
+    '/calendario': {
+      id: '/calendario'
+      path: '/calendario'
+      fullPath: '/calendario'
+      preLoaderRoute: typeof CalendarioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -150,66 +116,15 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app/': {
-      id: '/app/'
-      path: '/'
-      fullPath: '/app/'
-      preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/patotas': {
-      id: '/app/patotas'
-      path: '/patotas'
-      fullPath: '/app/patotas'
-      preLoaderRoute: typeof AppPatotasRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/mural': {
-      id: '/app/mural'
-      path: '/mural'
-      fullPath: '/app/mural'
-      preLoaderRoute: typeof AppMuralRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/membros': {
-      id: '/app/membros'
-      path: '/membros'
-      fullPath: '/app/membros'
-      preLoaderRoute: typeof AppMembrosRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/jogos': {
-      id: '/app/jogos'
-      path: '/jogos'
-      fullPath: '/app/jogos'
-      preLoaderRoute: typeof AppJogosRouteImport
-      parentRoute: typeof AppRoute
-    }
   }
 }
 
-interface AppRouteChildren {
-  AppJogosRoute: typeof AppJogosRoute
-  AppMembrosRoute: typeof AppMembrosRoute
-  AppMuralRoute: typeof AppMuralRoute
-  AppPatotasRoute: typeof AppPatotasRoute
-  AppIndexRoute: typeof AppIndexRoute
-}
-
-const AppRouteChildren: AppRouteChildren = {
-  AppJogosRoute: AppJogosRoute,
-  AppMembrosRoute: AppMembrosRoute,
-  AppMuralRoute: AppMuralRoute,
-  AppPatotasRoute: AppPatotasRoute,
-  AppIndexRoute: AppIndexRoute,
-}
-
-const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AppRoute: AppRouteWithChildren,
+  CalendarioRoute: CalendarioRoute,
   ContatoRoute: ContatoRoute,
+  ElencoRoute: ElencoRoute,
+  TimeRoute: TimeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
