@@ -1,25 +1,30 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { Shield } from "lucide-react";
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/65">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-foreground text-background font-display font-bold">
-            P
+        <Link to="/" className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-foreground text-background">
+            <Shield className="h-5 w-5" aria-hidden="true" />
           </div>
-          <span className="font-display text-lg font-semibold tracking-tight">Patota</span>
+          <div className="leading-none">
+            <span className="block font-display text-base font-bold tracking-wider">GLADIATORS</span>
+            <span className="block text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Futebol Americano</span>
+          </div>
         </Link>
         <nav aria-label="Principal" className="hidden items-center gap-7 text-sm md:flex">
-          <Link to="/sobre" className="text-muted-foreground hover:text-foreground" activeProps={{ className: "text-foreground font-semibold" }}>Sobre</Link>
-          <Link to="/metodologia" className="text-muted-foreground hover:text-foreground" activeProps={{ className: "text-foreground font-semibold" }}>Metodologia</Link>
-          <Link to="/acessibilidade" className="text-muted-foreground hover:text-foreground" activeProps={{ className: "text-foreground font-semibold" }}>Acessibilidade</Link>
+          <Link to="/" className="text-muted-foreground hover:text-foreground" activeOptions={{ exact: true }} activeProps={{ className: "text-foreground font-semibold" }}>Início</Link>
+          <Link to="/time" className="text-muted-foreground hover:text-foreground" activeProps={{ className: "text-foreground font-semibold" }}>O Time</Link>
+          <Link to="/elenco" className="text-muted-foreground hover:text-foreground" activeProps={{ className: "text-foreground font-semibold" }}>Elenco</Link>
+          <Link to="/calendario" className="text-muted-foreground hover:text-foreground" activeProps={{ className: "text-foreground font-semibold" }}>Calendário</Link>
           <Link to="/contato" className="text-muted-foreground hover:text-foreground" activeProps={{ className: "text-foreground font-semibold" }}>Contato</Link>
         </nav>
         <div className="flex items-center gap-2">
-          <Button asChild variant="default" className="bg-accent text-accent-foreground hover:bg-accent/90">
-            <Link to="/app">Abrir protótipo</Link>
+          <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
+            <Link to="/contato">Faça parte</Link>
           </Button>
         </div>
       </div>
@@ -33,25 +38,31 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-3 lg:px-8">
         <div>
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-accent text-accent-foreground font-display font-bold">P</div>
-            <span className="font-display text-lg font-semibold">Patota</span>
+            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-accent text-accent-foreground">
+              <Shield className="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div className="leading-none">
+              <span className="block font-display text-base font-bold tracking-wider">GLADIATORS</span>
+              <span className="block text-[10px] uppercase tracking-[0.25em] text-background/60">Futebol Americano</span>
+            </div>
           </div>
-          <p className="mt-3 max-w-sm text-sm text-background/70">
-            Solução colaborativa, acessível e gratuita para a gestão de patotas de futebol.
+          <p className="mt-4 max-w-sm text-sm text-background/70">
+            15 anos construindo uma trajetória marcada por paixão, determinação e momentos memoráveis no futebol americano.
           </p>
         </div>
         <div className="text-sm text-background/70">
-          <h3 className="mb-3 font-display text-sm font-semibold uppercase tracking-wider text-background">Projeto</h3>
+          <h3 className="mb-3 font-display text-sm font-semibold uppercase tracking-wider text-background">Navegação</h3>
           <ul className="space-y-2">
-            <li><Link to="/sobre" className="hover:text-background">Sobre</Link></li>
-            <li><Link to="/metodologia" className="hover:text-background">Metodologia (M3C)</Link></li>
-            <li><Link to="/acessibilidade" className="hover:text-background">Acessibilidade (WCAG)</Link></li>
+            <li><Link to="/time" className="hover:text-background">O Time</Link></li>
+            <li><Link to="/elenco" className="hover:text-background">Elenco</Link></li>
+            <li><Link to="/calendario" className="hover:text-background">Calendário</Link></li>
+            <li><Link to="/contato" className="hover:text-background">Contato</Link></li>
           </ul>
         </div>
         <div className="text-sm text-background/70">
-          <h3 className="mb-3 font-display text-sm font-semibold uppercase tracking-wider text-background">Atividade de Extensão</h3>
-          <p>Público-alvo: grupos de patotas de futebol da comunidade local.</p>
-          <p className="mt-2">© {new Date().getFullYear()} Projeto Patota.</p>
+          <h3 className="mb-3 font-display text-sm font-semibold uppercase tracking-wider text-background">Lema</h3>
+          <p className="font-display text-lg italic text-background">"O que fazemos na vida ecoa na eternidade."</p>
+          <p className="mt-4">© {new Date().getFullYear()} Gladiators Futebol Americano.</p>
         </div>
       </div>
     </footer>
