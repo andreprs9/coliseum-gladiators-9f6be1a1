@@ -33,7 +33,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-3 lg:px-8">
         <div>
           <div className="flex items-center gap-3">
-            <img src={logo} alt="" aria-hidden="true" width={400} height={200} className="h-11 w-auto brightness-0 invert" />
+            <img src={logo} alt="" aria-hidden="true" width={400} height={200} className="h-11 w-auto" />
             <span className="text-[10px] uppercase tracking-[0.3em] text-background/60">Futebol Americano</span>
           </div>
           <p className="mt-4 max-w-sm text-sm text-background/70">
