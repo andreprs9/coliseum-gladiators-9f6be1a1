@@ -1,19 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { Shield } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/65">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-foreground text-background">
-            <Shield className="h-5 w-5" aria-hidden="true" />
-          </div>
-          <div className="leading-none">
-            <span className="block font-display text-base font-bold tracking-wider">GLADIATORS</span>
-            <span className="block text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Futebol Americano</span>
-          </div>
+        <Link to="/" className="flex items-center gap-3" aria-label="Gladiators Futebol Americano — Início">
+          <img src={logo} alt="" aria-hidden="true" width={400} height={200} className="h-10 w-auto" />
+          <span className="hidden text-[10px] uppercase tracking-[0.3em] text-muted-foreground sm:block">Futebol Americano</span>
         </Link>
         <nav aria-label="Principal" className="hidden items-center gap-7 text-sm md:flex">
           <Link to="/" className="text-muted-foreground hover:text-foreground" activeOptions={{ exact: true }} activeProps={{ className: "text-foreground font-semibold" }}>Início</Link>
@@ -37,14 +32,9 @@ export function SiteFooter() {
     <footer className="border-t border-border bg-foreground text-background">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-3 lg:px-8">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-accent text-accent-foreground">
-              <Shield className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <div className="leading-none">
-              <span className="block font-display text-base font-bold tracking-wider">GLADIATORS</span>
-              <span className="block text-[10px] uppercase tracking-[0.25em] text-background/60">Futebol Americano</span>
-            </div>
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="" aria-hidden="true" width={400} height={200} className="h-11 w-auto" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-background/60">Futebol Americano</span>
           </div>
           <p className="mt-4 max-w-sm text-sm text-background/70">
             15 anos construindo uma trajetória marcada por paixão, determinação e momentos memoráveis no futebol americano.
