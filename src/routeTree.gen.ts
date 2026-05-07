@@ -9,11 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SobreRouteImport } from './routes/sobre'
-import { Route as MetodologiaRouteImport } from './routes/metodologia'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as AppRouteImport } from './routes/app'
-import { Route as AcessibilidadeRouteImport } from './routes/acessibilidade'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppPatotasRouteImport } from './routes/app.patotas'
@@ -21,16 +18,6 @@ import { Route as AppMuralRouteImport } from './routes/app.mural'
 import { Route as AppMembrosRouteImport } from './routes/app.membros'
 import { Route as AppJogosRouteImport } from './routes/app.jogos'
 
-const SobreRoute = SobreRouteImport.update({
-  id: '/sobre',
-  path: '/sobre',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MetodologiaRoute = MetodologiaRouteImport.update({
-  id: '/metodologia',
-  path: '/metodologia',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ContatoRoute = ContatoRouteImport.update({
   id: '/contato',
   path: '/contato',
@@ -39,11 +26,6 @@ const ContatoRoute = ContatoRouteImport.update({
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AcessibilidadeRoute = AcessibilidadeRouteImport.update({
-  id: '/acessibilidade',
-  path: '/acessibilidade',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -79,11 +61,8 @@ const AppJogosRoute = AppJogosRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/acessibilidade': typeof AcessibilidadeRoute
   '/app': typeof AppRouteWithChildren
   '/contato': typeof ContatoRoute
-  '/metodologia': typeof MetodologiaRoute
-  '/sobre': typeof SobreRoute
   '/app/jogos': typeof AppJogosRoute
   '/app/membros': typeof AppMembrosRoute
   '/app/mural': typeof AppMuralRoute
@@ -92,10 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/acessibilidade': typeof AcessibilidadeRoute
   '/contato': typeof ContatoRoute
-  '/metodologia': typeof MetodologiaRoute
-  '/sobre': typeof SobreRoute
   '/app/jogos': typeof AppJogosRoute
   '/app/membros': typeof AppMembrosRoute
   '/app/mural': typeof AppMuralRoute
@@ -105,11 +81,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/acessibilidade': typeof AcessibilidadeRoute
   '/app': typeof AppRouteWithChildren
   '/contato': typeof ContatoRoute
-  '/metodologia': typeof MetodologiaRoute
-  '/sobre': typeof SobreRoute
   '/app/jogos': typeof AppJogosRoute
   '/app/membros': typeof AppMembrosRoute
   '/app/mural': typeof AppMuralRoute
@@ -120,11 +93,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/acessibilidade'
     | '/app'
     | '/contato'
-    | '/metodologia'
-    | '/sobre'
     | '/app/jogos'
     | '/app/membros'
     | '/app/mural'
@@ -133,10 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/acessibilidade'
     | '/contato'
-    | '/metodologia'
-    | '/sobre'
     | '/app/jogos'
     | '/app/membros'
     | '/app/mural'
@@ -145,11 +112,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/acessibilidade'
     | '/app'
     | '/contato'
-    | '/metodologia'
-    | '/sobre'
     | '/app/jogos'
     | '/app/membros'
     | '/app/mural'
@@ -159,29 +123,12 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AcessibilidadeRoute: typeof AcessibilidadeRoute
   AppRoute: typeof AppRouteWithChildren
   ContatoRoute: typeof ContatoRoute
-  MetodologiaRoute: typeof MetodologiaRoute
-  SobreRoute: typeof SobreRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sobre': {
-      id: '/sobre'
-      path: '/sobre'
-      fullPath: '/sobre'
-      preLoaderRoute: typeof SobreRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/metodologia': {
-      id: '/metodologia'
-      path: '/metodologia'
-      fullPath: '/metodologia'
-      preLoaderRoute: typeof MetodologiaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/contato': {
       id: '/contato'
       path: '/contato'
@@ -194,13 +141,6 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/acessibilidade': {
-      id: '/acessibilidade'
-      path: '/acessibilidade'
-      fullPath: '/acessibilidade'
-      preLoaderRoute: typeof AcessibilidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -268,12 +208,19 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AcessibilidadeRoute: AcessibilidadeRoute,
   AppRoute: AppRouteWithChildren,
   ContatoRoute: ContatoRoute,
-  MetodologiaRoute: MetodologiaRoute,
-  SobreRoute: SobreRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
