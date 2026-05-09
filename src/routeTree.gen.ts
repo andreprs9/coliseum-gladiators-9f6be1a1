@@ -21,7 +21,9 @@ import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppTreinosRouteImport } from './routes/app.treinos'
 import { Route as AppTarefasRouteImport } from './routes/app.tarefas'
 import { Route as AppNotificacoesRouteImport } from './routes/app.notificacoes'
+import { Route as AppMonitoramentoRouteImport } from './routes/app.monitoramento'
 import { Route as AppJogosRouteImport } from './routes/app.jogos'
+import { Route as AppJogadasRouteImport } from './routes/app.jogadas'
 import { Route as AppDesempenhoRouteImport } from './routes/app.desempenho'
 import { Route as AppAtletasRouteImport } from './routes/app.atletas'
 
@@ -85,9 +87,19 @@ const AppNotificacoesRoute = AppNotificacoesRouteImport.update({
   path: '/notificacoes',
   getParentRoute: () => AppRoute,
 } as any)
+const AppMonitoramentoRoute = AppMonitoramentoRouteImport.update({
+  id: '/monitoramento',
+  path: '/monitoramento',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppJogosRoute = AppJogosRouteImport.update({
   id: '/jogos',
   path: '/jogos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppJogadasRoute = AppJogadasRouteImport.update({
+  id: '/jogadas',
+  path: '/jogadas',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDesempenhoRoute = AppDesempenhoRouteImport.update({
@@ -112,7 +124,9 @@ export interface FileRoutesByFullPath {
   '/time': typeof TimeRoute
   '/app/atletas': typeof AppAtletasRoute
   '/app/desempenho': typeof AppDesempenhoRoute
+  '/app/jogadas': typeof AppJogadasRoute
   '/app/jogos': typeof AppJogosRoute
+  '/app/monitoramento': typeof AppMonitoramentoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/tarefas': typeof AppTarefasRoute
   '/app/treinos': typeof AppTreinosRoute
@@ -128,7 +142,9 @@ export interface FileRoutesByTo {
   '/time': typeof TimeRoute
   '/app/atletas': typeof AppAtletasRoute
   '/app/desempenho': typeof AppDesempenhoRoute
+  '/app/jogadas': typeof AppJogadasRoute
   '/app/jogos': typeof AppJogosRoute
+  '/app/monitoramento': typeof AppMonitoramentoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/tarefas': typeof AppTarefasRoute
   '/app/treinos': typeof AppTreinosRoute
@@ -146,7 +162,9 @@ export interface FileRoutesById {
   '/time': typeof TimeRoute
   '/app/atletas': typeof AppAtletasRoute
   '/app/desempenho': typeof AppDesempenhoRoute
+  '/app/jogadas': typeof AppJogadasRoute
   '/app/jogos': typeof AppJogosRoute
+  '/app/monitoramento': typeof AppMonitoramentoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/tarefas': typeof AppTarefasRoute
   '/app/treinos': typeof AppTreinosRoute
@@ -165,7 +183,9 @@ export interface FileRouteTypes {
     | '/time'
     | '/app/atletas'
     | '/app/desempenho'
+    | '/app/jogadas'
     | '/app/jogos'
+    | '/app/monitoramento'
     | '/app/notificacoes'
     | '/app/tarefas'
     | '/app/treinos'
@@ -181,7 +201,9 @@ export interface FileRouteTypes {
     | '/time'
     | '/app/atletas'
     | '/app/desempenho'
+    | '/app/jogadas'
     | '/app/jogos'
+    | '/app/monitoramento'
     | '/app/notificacoes'
     | '/app/tarefas'
     | '/app/treinos'
@@ -198,7 +220,9 @@ export interface FileRouteTypes {
     | '/time'
     | '/app/atletas'
     | '/app/desempenho'
+    | '/app/jogadas'
     | '/app/jogos'
+    | '/app/monitoramento'
     | '/app/notificacoes'
     | '/app/tarefas'
     | '/app/treinos'
@@ -302,11 +326,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNotificacoesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/monitoramento': {
+      id: '/app/monitoramento'
+      path: '/monitoramento'
+      fullPath: '/app/monitoramento'
+      preLoaderRoute: typeof AppMonitoramentoRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/jogos': {
       id: '/app/jogos'
       path: '/jogos'
       fullPath: '/app/jogos'
       preLoaderRoute: typeof AppJogosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/jogadas': {
+      id: '/app/jogadas'
+      path: '/jogadas'
+      fullPath: '/app/jogadas'
+      preLoaderRoute: typeof AppJogadasRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/desempenho': {
@@ -329,7 +367,9 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppAtletasRoute: typeof AppAtletasRoute
   AppDesempenhoRoute: typeof AppDesempenhoRoute
+  AppJogadasRoute: typeof AppJogadasRoute
   AppJogosRoute: typeof AppJogosRoute
+  AppMonitoramentoRoute: typeof AppMonitoramentoRoute
   AppNotificacoesRoute: typeof AppNotificacoesRoute
   AppTarefasRoute: typeof AppTarefasRoute
   AppTreinosRoute: typeof AppTreinosRoute
@@ -339,7 +379,9 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAtletasRoute: AppAtletasRoute,
   AppDesempenhoRoute: AppDesempenhoRoute,
+  AppJogadasRoute: AppJogadasRoute,
   AppJogosRoute: AppJogosRoute,
+  AppMonitoramentoRoute: AppMonitoramentoRoute,
   AppNotificacoesRoute: AppNotificacoesRoute,
   AppTarefasRoute: AppTarefasRoute,
   AppTreinosRoute: AppTreinosRoute,
@@ -361,3 +403,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
