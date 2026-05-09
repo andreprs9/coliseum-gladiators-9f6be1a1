@@ -13,7 +13,15 @@ import { Route as TimeRouteImport } from './routes/time'
 import { Route as ElencoRouteImport } from './routes/elenco'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as CalendarioRouteImport } from './routes/calendario'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppTreinosRouteImport } from './routes/app.treinos'
+import { Route as AppTarefasRouteImport } from './routes/app.tarefas'
+import { Route as AppNotificacoesRouteImport } from './routes/app.notificacoes'
+import { Route as AppJogosRouteImport } from './routes/app.jogos'
+import { Route as AppDesempenhoRouteImport } from './routes/app.desempenho'
+import { Route as AppAtletasRouteImport } from './routes/app.atletas'
 
 const TimeRoute = TimeRouteImport.update({
   id: '/time',
@@ -35,18 +43,66 @@ const CalendarioRoute = CalendarioRouteImport.update({
   path: '/calendario',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTreinosRoute = AppTreinosRouteImport.update({
+  id: '/treinos',
+  path: '/treinos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTarefasRoute = AppTarefasRouteImport.update({
+  id: '/tarefas',
+  path: '/tarefas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNotificacoesRoute = AppNotificacoesRouteImport.update({
+  id: '/notificacoes',
+  path: '/notificacoes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppJogosRoute = AppJogosRouteImport.update({
+  id: '/jogos',
+  path: '/jogos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDesempenhoRoute = AppDesempenhoRouteImport.update({
+  id: '/desempenho',
+  path: '/desempenho',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAtletasRoute = AppAtletasRouteImport.update({
+  id: '/atletas',
+  path: '/atletas',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
   '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
   '/elenco': typeof ElencoRoute
   '/time': typeof TimeRoute
+  '/app/atletas': typeof AppAtletasRoute
+  '/app/desempenho': typeof AppDesempenhoRoute
+  '/app/jogos': typeof AppJogosRoute
+  '/app/notificacoes': typeof AppNotificacoesRoute
+  '/app/tarefas': typeof AppTarefasRoute
+  '/app/treinos': typeof AppTreinosRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,25 +110,80 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/elenco': typeof ElencoRoute
   '/time': typeof TimeRoute
+  '/app/atletas': typeof AppAtletasRoute
+  '/app/desempenho': typeof AppDesempenhoRoute
+  '/app/jogos': typeof AppJogosRoute
+  '/app/notificacoes': typeof AppNotificacoesRoute
+  '/app/tarefas': typeof AppTarefasRoute
+  '/app/treinos': typeof AppTreinosRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
   '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
   '/elenco': typeof ElencoRoute
   '/time': typeof TimeRoute
+  '/app/atletas': typeof AppAtletasRoute
+  '/app/desempenho': typeof AppDesempenhoRoute
+  '/app/jogos': typeof AppJogosRoute
+  '/app/notificacoes': typeof AppNotificacoesRoute
+  '/app/tarefas': typeof AppTarefasRoute
+  '/app/treinos': typeof AppTreinosRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calendario' | '/contato' | '/elenco' | '/time'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/calendario'
+    | '/contato'
+    | '/elenco'
+    | '/time'
+    | '/app/atletas'
+    | '/app/desempenho'
+    | '/app/jogos'
+    | '/app/notificacoes'
+    | '/app/tarefas'
+    | '/app/treinos'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calendario' | '/contato' | '/elenco' | '/time'
-  id: '__root__' | '/' | '/calendario' | '/contato' | '/elenco' | '/time'
+  to:
+    | '/'
+    | '/calendario'
+    | '/contato'
+    | '/elenco'
+    | '/time'
+    | '/app/atletas'
+    | '/app/desempenho'
+    | '/app/jogos'
+    | '/app/notificacoes'
+    | '/app/tarefas'
+    | '/app/treinos'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/calendario'
+    | '/contato'
+    | '/elenco'
+    | '/time'
+    | '/app/atletas'
+    | '/app/desempenho'
+    | '/app/jogos'
+    | '/app/notificacoes'
+    | '/app/tarefas'
+    | '/app/treinos'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
   CalendarioRoute: typeof CalendarioRoute
   ContatoRoute: typeof ContatoRoute
   ElencoRoute: typeof ElencoRoute
@@ -109,6 +220,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalendarioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -116,11 +234,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/treinos': {
+      id: '/app/treinos'
+      path: '/treinos'
+      fullPath: '/app/treinos'
+      preLoaderRoute: typeof AppTreinosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/tarefas': {
+      id: '/app/tarefas'
+      path: '/tarefas'
+      fullPath: '/app/tarefas'
+      preLoaderRoute: typeof AppTarefasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/notificacoes': {
+      id: '/app/notificacoes'
+      path: '/notificacoes'
+      fullPath: '/app/notificacoes'
+      preLoaderRoute: typeof AppNotificacoesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/jogos': {
+      id: '/app/jogos'
+      path: '/jogos'
+      fullPath: '/app/jogos'
+      preLoaderRoute: typeof AppJogosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/desempenho': {
+      id: '/app/desempenho'
+      path: '/desempenho'
+      fullPath: '/app/desempenho'
+      preLoaderRoute: typeof AppDesempenhoRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/atletas': {
+      id: '/app/atletas'
+      path: '/atletas'
+      fullPath: '/app/atletas'
+      preLoaderRoute: typeof AppAtletasRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAtletasRoute: typeof AppAtletasRoute
+  AppDesempenhoRoute: typeof AppDesempenhoRoute
+  AppJogosRoute: typeof AppJogosRoute
+  AppNotificacoesRoute: typeof AppNotificacoesRoute
+  AppTarefasRoute: typeof AppTarefasRoute
+  AppTreinosRoute: typeof AppTreinosRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAtletasRoute: AppAtletasRoute,
+  AppDesempenhoRoute: AppDesempenhoRoute,
+  AppJogosRoute: AppJogosRoute,
+  AppNotificacoesRoute: AppNotificacoesRoute,
+  AppTarefasRoute: AppTarefasRoute,
+  AppTreinosRoute: AppTreinosRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
   CalendarioRoute: CalendarioRoute,
   ContatoRoute: ContatoRoute,
   ElencoRoute: ElencoRoute,
