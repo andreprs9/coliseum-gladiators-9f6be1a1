@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Dumbbell, ListChecks, CalendarDays, Bell, Users, TrendingUp, Home } from "lucide-react";
+import { LayoutDashboard, Dumbbell, ListChecks, CalendarDays, Bell, Users, TrendingUp, Home, BookOpen, ClipboardList } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -22,10 +22,14 @@ const baseItems: NavItem[] = [
   { title: "Treinos", url: "/app/treinos", icon: Dumbbell },
   { title: "Tarefas", url: "/app/tarefas", icon: ListChecks },
   { title: "Jogos", url: "/app/jogos", icon: CalendarDays },
+  { title: "Jogadas", url: "/app/jogadas", icon: BookOpen },
   { title: "Notificações", url: "/app/notificacoes", icon: Bell },
 ];
 
-const treinadorItems: NavItem[] = [{ title: "Atletas", url: "/app/atletas", icon: Users }];
+const treinadorItems: NavItem[] = [
+  { title: "Atletas", url: "/app/atletas", icon: Users },
+  { title: "Monitoramento", url: "/app/monitoramento", icon: ClipboardList },
+];
 const atletaItems: NavItem[] = [{ title: "Meu Desempenho", url: "/app/desempenho", icon: TrendingUp }];
 
 export function AppSidebar() {

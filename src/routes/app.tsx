@@ -1,9 +1,10 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useNavigate, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { RoleProvider, useRole, type Role } from "@/lib/role-context";
-import { Bell } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { AuthProvider, useAuth } from "@/lib/auth-context";
+import { Bell, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/app")({
@@ -15,8 +16,36 @@ export const Route = createFileRoute("/app")({
       { property: "og:description", content: "Painel de gestão para treinadores e atletas." },
     ],
   }),
-  component: AppLayout,
+  component: () => (
+    <AuthProvider>
+      <RoleProvider>
+        <AppGate />
+      </RoleProvider>
+    </AuthProvider>
+  ),
 });
+
+function AppGate() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Aguardar hidratação inicial; se ainda não houver usuário, redirecionar
+    const t = setTimeout(() => {
+      if (!user) navigate({ to: "/login" });
+    }, 50);
+    return () => clearTimeout(t);
+  }, [user, navigate]);
+
+  if (!user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-muted/30">
+        <p className="text-sm text-muted-foreground">Verificando sessão…</p>
+      </div>
+    );
+  }
+  return <AppLayout />;
+}
 
 function RoleSwitcher() {
   const { role, setRole } = useRole();
@@ -39,34 +68,45 @@ function RoleSwitcher() {
 }
 
 function AppLayout() {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+
   return (
-    <RoleProvider>
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full bg-muted/30">
-          <AppSidebar />
-          <div className="flex flex-1 flex-col">
-            <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b border-border bg-background/90 px-4 backdrop-blur">
-              <div className="flex items-center gap-2">
-                <SidebarTrigger />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
-                  Gladiators · Gestão
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <RoleSwitcher />
-                <Button asChild variant="ghost" size="icon" aria-label="Notificações">
-                  <Link to="/app/notificacoes">
-                    <Bell className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </header>
-            <main className="flex-1 p-4 sm:p-6 lg:p-8">
-              <Outlet />
-            </main>
-          </div>
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full bg-muted/30">
+        <AppSidebar />
+        <div className="flex flex-1 flex-col">
+          <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b border-border bg-background/90 px-4 backdrop-blur">
+            <div className="flex items-center gap-2">
+              <SidebarTrigger />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+                Gladiators · Gestão
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="hidden text-xs text-muted-foreground sm:block">{user?.email}</span>
+              <RoleSwitcher />
+              <Button asChild variant="ghost" size="icon" aria-label="Notificações">
+                <Link to="/app/notificacoes"><Bell className="h-4 w-4" /></Link>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="Sair"
+                onClick={() => {
+                  logout();
+                  navigate({ to: "/login" });
+                }}
+              >
+                <LogOut className="h-4 w-4" />
+              </Button>
+            </div>
+          </header>
+          <main className="flex-1 p-4 sm:p-6 lg:p-8">
+            <Outlet />
+          </main>
         </div>
-      </SidebarProvider>
-    </RoleProvider>
+      </div>
+    </SidebarProvider>
   );
 }

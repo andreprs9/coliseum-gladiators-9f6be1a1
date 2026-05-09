@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TimeRouteImport } from './routes/time'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ElencoRouteImport } from './routes/elenco'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as CalendarioRouteImport } from './routes/calendario'
@@ -19,13 +21,25 @@ import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppTreinosRouteImport } from './routes/app.treinos'
 import { Route as AppTarefasRouteImport } from './routes/app.tarefas'
 import { Route as AppNotificacoesRouteImport } from './routes/app.notificacoes'
+import { Route as AppMonitoramentoRouteImport } from './routes/app.monitoramento'
 import { Route as AppJogosRouteImport } from './routes/app.jogos'
+import { Route as AppJogadasRouteImport } from './routes/app.jogadas'
 import { Route as AppDesempenhoRouteImport } from './routes/app.desempenho'
 import { Route as AppAtletasRouteImport } from './routes/app.atletas'
 
 const TimeRoute = TimeRouteImport.update({
   id: '/time',
   path: '/time',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ElencoRoute = ElencoRouteImport.update({
@@ -73,9 +87,19 @@ const AppNotificacoesRoute = AppNotificacoesRouteImport.update({
   path: '/notificacoes',
   getParentRoute: () => AppRoute,
 } as any)
+const AppMonitoramentoRoute = AppMonitoramentoRouteImport.update({
+  id: '/monitoramento',
+  path: '/monitoramento',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppJogosRoute = AppJogosRouteImport.update({
   id: '/jogos',
   path: '/jogos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppJogadasRoute = AppJogadasRouteImport.update({
+  id: '/jogadas',
+  path: '/jogadas',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDesempenhoRoute = AppDesempenhoRouteImport.update({
@@ -95,10 +119,14 @@ export interface FileRoutesByFullPath {
   '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
   '/elenco': typeof ElencoRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/time': typeof TimeRoute
   '/app/atletas': typeof AppAtletasRoute
   '/app/desempenho': typeof AppDesempenhoRoute
+  '/app/jogadas': typeof AppJogadasRoute
   '/app/jogos': typeof AppJogosRoute
+  '/app/monitoramento': typeof AppMonitoramentoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/tarefas': typeof AppTarefasRoute
   '/app/treinos': typeof AppTreinosRoute
@@ -109,10 +137,14 @@ export interface FileRoutesByTo {
   '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
   '/elenco': typeof ElencoRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/time': typeof TimeRoute
   '/app/atletas': typeof AppAtletasRoute
   '/app/desempenho': typeof AppDesempenhoRoute
+  '/app/jogadas': typeof AppJogadasRoute
   '/app/jogos': typeof AppJogosRoute
+  '/app/monitoramento': typeof AppMonitoramentoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/tarefas': typeof AppTarefasRoute
   '/app/treinos': typeof AppTreinosRoute
@@ -125,10 +157,14 @@ export interface FileRoutesById {
   '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
   '/elenco': typeof ElencoRoute
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/time': typeof TimeRoute
   '/app/atletas': typeof AppAtletasRoute
   '/app/desempenho': typeof AppDesempenhoRoute
+  '/app/jogadas': typeof AppJogadasRoute
   '/app/jogos': typeof AppJogosRoute
+  '/app/monitoramento': typeof AppMonitoramentoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/tarefas': typeof AppTarefasRoute
   '/app/treinos': typeof AppTreinosRoute
@@ -142,10 +178,14 @@ export interface FileRouteTypes {
     | '/calendario'
     | '/contato'
     | '/elenco'
+    | '/login'
+    | '/reset-password'
     | '/time'
     | '/app/atletas'
     | '/app/desempenho'
+    | '/app/jogadas'
     | '/app/jogos'
+    | '/app/monitoramento'
     | '/app/notificacoes'
     | '/app/tarefas'
     | '/app/treinos'
@@ -156,10 +196,14 @@ export interface FileRouteTypes {
     | '/calendario'
     | '/contato'
     | '/elenco'
+    | '/login'
+    | '/reset-password'
     | '/time'
     | '/app/atletas'
     | '/app/desempenho'
+    | '/app/jogadas'
     | '/app/jogos'
+    | '/app/monitoramento'
     | '/app/notificacoes'
     | '/app/tarefas'
     | '/app/treinos'
@@ -171,10 +215,14 @@ export interface FileRouteTypes {
     | '/calendario'
     | '/contato'
     | '/elenco'
+    | '/login'
+    | '/reset-password'
     | '/time'
     | '/app/atletas'
     | '/app/desempenho'
+    | '/app/jogadas'
     | '/app/jogos'
+    | '/app/monitoramento'
     | '/app/notificacoes'
     | '/app/tarefas'
     | '/app/treinos'
@@ -187,6 +235,8 @@ export interface RootRouteChildren {
   CalendarioRoute: typeof CalendarioRoute
   ContatoRoute: typeof ContatoRoute
   ElencoRoute: typeof ElencoRoute
+  LoginRoute: typeof LoginRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   TimeRoute: typeof TimeRoute
 }
 
@@ -197,6 +247,20 @@ declare module '@tanstack/react-router' {
       path: '/time'
       fullPath: '/time'
       preLoaderRoute: typeof TimeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/elenco': {
@@ -262,11 +326,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNotificacoesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/monitoramento': {
+      id: '/app/monitoramento'
+      path: '/monitoramento'
+      fullPath: '/app/monitoramento'
+      preLoaderRoute: typeof AppMonitoramentoRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/jogos': {
       id: '/app/jogos'
       path: '/jogos'
       fullPath: '/app/jogos'
       preLoaderRoute: typeof AppJogosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/jogadas': {
+      id: '/app/jogadas'
+      path: '/jogadas'
+      fullPath: '/app/jogadas'
+      preLoaderRoute: typeof AppJogadasRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/desempenho': {
@@ -289,7 +367,9 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppAtletasRoute: typeof AppAtletasRoute
   AppDesempenhoRoute: typeof AppDesempenhoRoute
+  AppJogadasRoute: typeof AppJogadasRoute
   AppJogosRoute: typeof AppJogosRoute
+  AppMonitoramentoRoute: typeof AppMonitoramentoRoute
   AppNotificacoesRoute: typeof AppNotificacoesRoute
   AppTarefasRoute: typeof AppTarefasRoute
   AppTreinosRoute: typeof AppTreinosRoute
@@ -299,7 +379,9 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAtletasRoute: AppAtletasRoute,
   AppDesempenhoRoute: AppDesempenhoRoute,
+  AppJogadasRoute: AppJogadasRoute,
   AppJogosRoute: AppJogosRoute,
+  AppMonitoramentoRoute: AppMonitoramentoRoute,
   AppNotificacoesRoute: AppNotificacoesRoute,
   AppTarefasRoute: AppTarefasRoute,
   AppTreinosRoute: AppTreinosRoute,
@@ -314,6 +396,8 @@ const rootRouteChildren: RootRouteChildren = {
   CalendarioRoute: CalendarioRoute,
   ContatoRoute: ContatoRoute,
   ElencoRoute: ElencoRoute,
+  LoginRoute: LoginRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   TimeRoute: TimeRoute,
 }
 export const routeTree = rootRouteImport
