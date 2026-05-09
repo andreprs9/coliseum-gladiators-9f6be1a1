@@ -18,6 +18,9 @@ export function SiteHeader() {
           <Link to="/contato" className="text-muted-foreground hover:text-foreground" activeProps={{ className: "text-foreground font-semibold" }}>Contato</Link>
         </nav>
         <div className="flex items-center gap-2">
+          <Button asChild variant="outline" className="hidden sm:inline-flex">
+            <Link to="/app">Área do Time</Link>
+          </Button>
           <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
             <Link to="/contato">Faça parte</Link>
           </Button>
