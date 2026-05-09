@@ -15,7 +15,9 @@ import {
 import logo from "@/assets/logo.png";
 import { useRole } from "@/lib/role-context";
 
-const baseItems = [
+type NavItem = { title: string; url: string; icon: typeof LayoutDashboard; exact?: boolean };
+
+const baseItems: NavItem[] = [
   { title: "Painel", url: "/app", icon: LayoutDashboard, exact: true },
   { title: "Treinos", url: "/app/treinos", icon: Dumbbell },
   { title: "Tarefas", url: "/app/tarefas", icon: ListChecks },
@@ -23,8 +25,8 @@ const baseItems = [
   { title: "Notificações", url: "/app/notificacoes", icon: Bell },
 ];
 
-const treinadorItems = [{ title: "Atletas", url: "/app/atletas", icon: Users }];
-const atletaItems = [{ title: "Meu Desempenho", url: "/app/desempenho", icon: TrendingUp }];
+const treinadorItems: NavItem[] = [{ title: "Atletas", url: "/app/atletas", icon: Users }];
+const atletaItems: NavItem[] = [{ title: "Meu Desempenho", url: "/app/desempenho", icon: TrendingUp }];
 
 export function AppSidebar() {
   const path = useRouterState({ select: (s) => s.location.pathname });
