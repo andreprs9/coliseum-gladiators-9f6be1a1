@@ -4,8 +4,10 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { RoleProvider, useRole, type Role } from "@/lib/role-context";
 import { AuthProvider, useAuth } from "@/lib/auth-context";
+import { AthletesProvider } from "@/lib/athletes-store";
 import { Bell, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/app")({
   head: () => ({
@@ -19,7 +21,9 @@ export const Route = createFileRoute("/app")({
   component: () => (
     <AuthProvider>
       <RoleProvider>
-        <AppGate />
+        <AthletesProvider>
+          <AppGate />
+        </AthletesProvider>
       </RoleProvider>
     </AuthProvider>
   ),
@@ -106,6 +110,7 @@ function AppLayout() {
             <Outlet />
           </main>
         </div>
+        <Toaster />
       </div>
     </SidebarProvider>
   );
