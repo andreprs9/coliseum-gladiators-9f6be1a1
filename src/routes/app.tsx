@@ -110,6 +110,7 @@ function AppLayout() {
             <Outlet />
           </main>
         </div>
+        <Toaster />
       </div>
     </SidebarProvider>
   );
