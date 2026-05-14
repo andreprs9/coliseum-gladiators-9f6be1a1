@@ -20,7 +20,9 @@ export const Route = createFileRoute("/app")({
   component: () => (
     <AuthProvider>
       <RoleProvider>
-        <AppGate />
+        <AthletesProvider>
+          <AppGate />
+        </AthletesProvider>
       </RoleProvider>
     </AuthProvider>
   ),
