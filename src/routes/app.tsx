@@ -4,6 +4,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { RoleProvider, useRole, type Role } from "@/lib/role-context";
 import { AuthProvider, useAuth } from "@/lib/auth-context";
+import { AthletesProvider } from "@/lib/athletes-store";
 import { Bell, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
