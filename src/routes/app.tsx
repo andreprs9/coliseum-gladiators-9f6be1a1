@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from "@/lib/auth-context";
 import { AthletesProvider } from "@/lib/athletes-store";
 import { Bell, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/app")({
   head: () => ({
