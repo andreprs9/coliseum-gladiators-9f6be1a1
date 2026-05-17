@@ -27,13 +27,18 @@ function LoginPage() {
     if (user) navigate({ to: "/app" });
   }, [user, navigate]);
 
-  const submit = async (e: FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+const submit = async (e: FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
     await login(email, password);
-    setLoading(false);
     navigate({ to: "/app" });
-  };
+  } catch (err: any) {
+    alert(err.message || "Erro ao fazer login");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-foreground px-4 py-12">
