@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { useAuth } from "@/lib/auth-context";
 
 export type Role = "treinador" | "atleta";
 
@@ -10,12 +11,22 @@ interface RoleContextValue {
 const RoleContext = createContext<RoleContextValue | null>(null);
 
 export function RoleProvider({ children }: { children: ReactNode }) {
+  const { role: supabaseRole } = useAuth();
   const [role, setRoleState] = useState<Role>("atleta");
 
   useEffect(() => {
-    const saved = typeof window !== "undefined" ? window.localStorage.getItem("gladiators.role") : null;
-    if (saved === "treinador" || saved === "atleta") setRoleState(saved);
-  }, []);
+    // Admin começa como treinador por padrão
+    if (supabaseRole === "admin") {
+      const saved = typeof window !== "undefined" ? window.localStorage.getItem("gladiators.role") : null;
+      if (saved === "treinador" || saved === "atleta") {
+        setRoleState(saved);
+      } else {
+        setRoleState("treinador");
+      }
+    } else {
+      setRoleState("atleta");
+    }
+  }, [supabaseRole]);
 
   const setRole = (r: Role) => {
     setRoleState(r);
