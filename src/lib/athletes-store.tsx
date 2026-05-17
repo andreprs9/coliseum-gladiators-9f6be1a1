@@ -139,6 +139,9 @@ export function AthletesProvider({ children }: { children: ReactNode }) {
       toast.error("Falha ao cadastrar");
       return;
     }
+    if (a.weightKg) {
+      await supabase.from("historico_peso").insert({ atleta_id: (data as DbRow).id, peso: a.weightKg } as never);
+    }
     setAthletes((prev) => [...prev, fromDb(data as DbRow, a.presence)]);
   };
 
