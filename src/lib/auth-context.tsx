@@ -1,55 +1,75 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-
-type User = { email: string; name: string };
+import { supabase } from "@/lib/supabase";
+import type { User } from "@supabase/supabase-js";
 
 interface AuthContextValue {
   user: User | null;
+  role: string | null;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   requestReset: (email: string) => Promise<void>;
   resetPassword: (password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
-const KEY = "gladiators.user";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const raw = window.localStorage.getItem(KEY);
-    if (raw) {
-      try {
-        setUser(JSON.parse(raw));
-      } catch {
-        /* noop */
-      }
-    }
+    // Pega sessão atual
+    supabase.auth.getSession().then(({ data }) => {
+      setUser(data.session?.user ?? null);
+      if (data.session?.user) fetchRole(data.session.user.id);
+    });
+
+    // Escuta mudanças de auth
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      if (session?.user) fetchRole(session.user.id);
+      else setRole(null);
+    });
+
+    return () => listener.subscription.unsubscribe();
   }, []);
 
-  const login = async (email: string, _password: string) => {
-    const u: User = { email, name: email.split("@")[0] || "Atleta" };
-    setUser(u);
-    window.localStorage.setItem(KEY, JSON.stringify(u));
+  const fetchRole = async (userId: string) => {
+    const { data } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .single();
+    setRole(data?.role ?? "atleta");
   };
 
-  const logout = () => {
+  const login = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw new Error(error.message);
+  };
+
+  const logout = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    window.localStorage.removeItem(KEY);
+    setRole(null);
   };
 
-  const requestReset = async (_email: string) => {
-    // Mock: pretend we sent an email
-    await new Promise((r) => setTimeout(r, 600));
+  const requestReset = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    if (error) throw new Error(error.message);
   };
 
-  const resetPassword = async (_password: string) => {
-    await new Promise((r) => setTimeout(r, 600));
+  const resetPassword = async (password: string) => {
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) throw new Error(error.message);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, requestReset, resetPassword }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, role, login, logout, requestReset, resetPassword }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 
