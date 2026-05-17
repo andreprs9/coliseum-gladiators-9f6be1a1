@@ -108,10 +108,14 @@ export function AthletesProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const update: Ctx["update"] = async (id, patch) => {
+    const prevAth = athletes.find((a) => a.id === id);
     const { error } = await supabase.from("atletas").update(toDb(patch)).eq("id", id);
     if (error) {
       toast.error("Falha ao salvar");
       return;
+    }
+    if (patch.weightKg !== undefined && patch.weightKg !== prevAth?.weightKg) {
+      await supabase.from("historico_peso").insert({ atleta_id: id, peso: patch.weightKg } as never);
     }
     setAthletes((prev) => prev.map((a) => (a.id === id ? { ...a, ...patch } : a)));
   };
