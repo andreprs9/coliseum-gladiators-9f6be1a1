@@ -12,17 +12,13 @@ const RoleContext = createContext<RoleContextValue | null>(null);
 
 export function RoleProvider({ children }: { children: ReactNode }) {
   const { role: supabaseRole } = useAuth();
-  const [role, setRoleState] = useState<Role>("atleta");
+  const [role, setRoleState] = useState<Role | null>(null);
 
   useEffect(() => {
-    // Admin começa como treinador por padrão
+    if (supabaseRole === null) return;
     if (supabaseRole === "admin") {
       const saved = typeof window !== "undefined" ? window.localStorage.getItem("gladiators.role") : null;
-      if (saved === "treinador" || saved === "atleta") {
-        setRoleState(saved);
-      } else {
-        setRoleState("treinador");
-      }
+      setRoleState((saved as Role) ?? "treinador");
     } else {
       setRoleState("atleta");
     }
@@ -33,7 +29,13 @@ export function RoleProvider({ children }: { children: ReactNode }) {
     if (typeof window !== "undefined") window.localStorage.setItem("gladiators.role", r);
   };
 
-  return <RoleContext.Provider value={{ role, setRole }}>{children}</RoleContext.Provider>;
+  if (role === null) return null;
+
+  return (
+    <RoleContext.Provider value={{ role, setRole }}>
+      {children}
+    </RoleContext.Provider>
+  );
 }
 
 export function useRole() {
