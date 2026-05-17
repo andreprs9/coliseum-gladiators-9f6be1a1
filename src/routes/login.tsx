@@ -21,6 +21,13 @@ function LoginPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const hash = window.location.hash;
+    if (hash && hash.includes("access_token") && hash.includes("type=recovery")) {
+      navigate({ to: `/reset-password${hash}` });
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     if (user) navigate({ to: "/app" });
   }, [user, navigate]);
 
