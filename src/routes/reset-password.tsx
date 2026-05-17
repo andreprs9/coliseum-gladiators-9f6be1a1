@@ -20,20 +20,34 @@ function ResetPasswordPage() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Captura o token do hash da URL enviado pelo Supabase
+    // Supabase dispara onAuthStateChange com evento PASSWORD_RECOVERY
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" && session) {
+        setReady(true);
+      }
+    });
+
+    // Também tenta pegar token do hash caso ainda esteja na URL
     const hash = window.location.hash;
     if (hash && hash.includes("access_token")) {
       const params = new URLSearchParams(hash.replace("#", "?"));
       const accessToken = params.get("access_token");
       const refreshToken = params.get("refresh_token");
       if (accessToken && refreshToken) {
-        supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken })
-          .then(() => setReady(true))
-          .catch(() => setMessage("Link inválido ou expirado."));
+        supabase.auth
+          .setSession({ access_token: accessToken, refresh_token: refreshToken })
+          .then(({ error }) => {
+            if (!error) setReady(true);
+            else setMessage("Link inválido ou expirado.");
+          });
+      } else {
+        setMessage("Link inválido ou expirado.");
       }
     } else {
       setMessage("Link inválido ou expirado.");
     }
+
+    return () => listener.subscription.unsubscribe();
   }, []);
 
   const submit = async (e: FormEvent) => {
@@ -42,12 +56,17 @@ function ResetPasswordPage() {
       setMessage("As senhas não coincidem.");
       return;
     }
+    if (password.length < 6) {
+      setMessage("A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
     setLoading(true);
     const { error } = await supabase.auth.updateUser({ password });
     if (error) {
       setMessage(error.message);
     } else {
       setMessage("Senha redefinida com sucesso!");
+      await supabase.auth.signOut();
       setTimeout(() => navigate({ to: "/login" }), 2000);
     }
     setLoading(false);
@@ -64,8 +83,8 @@ function ResetPasswordPage() {
           {!ready && !message && (
             <p className="text-center text-sm text-muted-foreground">Verificando link…</p>
           )}
-          {message && (
-            <p className="text-center text-sm text-accent">{message}</p>
+          {!ready && message && (
+            <p className="text-center text-sm text-destructive">{message}</p>
           )}
           {ready && (
             <form onSubmit={submit} className="space-y-4">
@@ -75,6 +94,7 @@ function ResetPasswordPage() {
                   id="password"
                   type="password"
                   required
+                  minLength={6}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -85,10 +105,14 @@ function ResetPasswordPage() {
                   id="confirm"
                   type="password"
                   required
+                  minLength={6}
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
                 />
               </div>
+              {message && (
+                <p className="text-center text-sm text-accent">{message}</p>
+              )}
               <Button
                 type="submit"
                 disabled={loading}
