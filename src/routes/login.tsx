@@ -71,7 +71,7 @@ function LoginPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Senha</Label>
-                <Link to="/reset-password" className="text-xs text-accent hover:underline">
+                <Link to="/forgot-password" className="text-xs text-accent hover:underline">
                   Esqueci a senha
                 </Link>
               </div>
