@@ -62,15 +62,16 @@ function RoleSwitcher() {
 }
 
 function AppLayout() {
-  const { logout, user, role } = useAuth();
+  const { logout, user, role: supabaseRole } = useAuth();
   const navigate = useNavigate();
+  const isAdmin = supabaseRole === "admin";
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-muted/30">
+      <div className="flex min-h-screen w-full bg-white">
         <AppSidebar />
         <div className="flex flex-1 flex-col">
-          <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b border-border bg-background/90 px-4 backdrop-blur">
+          <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-3 border-b border-border bg-white px-4">
             <div className="flex items-center gap-2">
               <SidebarTrigger />
               <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
@@ -79,12 +80,7 @@ function AppLayout() {
             </div>
             <div className="flex items-center gap-3">
               <span className="hidden text-xs text-muted-foreground sm:block">{user?.email}</span>
-              <RoleSwitcher />
-              {role && (
-                <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                  {role}
-                </span>
-              )}
+              {isAdmin && <RoleSwitcher />}
               <Button asChild variant="ghost" size="icon" aria-label="Notificações">
                 <Link to="/app/notificacoes"><Bell className="h-4 w-4" /></Link>
               </Button>
