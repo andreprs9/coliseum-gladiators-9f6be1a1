@@ -9,12 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/app")({
-  head: () => ({
-    meta: [
-      { title: "Gestão do Time — Gladiators" },
-      { name: "description", content: "Painel de gestão para treinadores e atletas do Gladiators." },
-    ],
-  }),
   component: () => (
     <AthletesProvider>
       <AppGate />
@@ -35,7 +29,7 @@ function AppGate() {
 
   if (!user) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-muted/30">
+      <div className="flex min-h-screen items-center justify-center">
         <p className="text-sm text-muted-foreground">Verificando sessão…</p>
       </div>
     );
