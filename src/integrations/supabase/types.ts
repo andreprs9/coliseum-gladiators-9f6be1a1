@@ -14,7 +14,124 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      atletas: {
+        Row: {
+          altura: number | null
+          ativo: boolean
+          created_at: string
+          data_nascimento: string | null
+          email: string | null
+          foto_url: string | null
+          id: string
+          nome: string
+          numero: number
+          peso_atual: number | null
+          posicao: string | null
+          setor: string | null
+          telefone: string | null
+          updated_at: string
+        }
+        Insert: {
+          altura?: number | null
+          ativo?: boolean
+          created_at?: string
+          data_nascimento?: string | null
+          email?: string | null
+          foto_url?: string | null
+          id?: string
+          nome: string
+          numero: number
+          peso_atual?: number | null
+          posicao?: string | null
+          setor?: string | null
+          telefone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          altura?: number | null
+          ativo?: boolean
+          created_at?: string
+          data_nascimento?: string | null
+          email?: string | null
+          foto_url?: string | null
+          id?: string
+          nome?: string
+          numero?: number
+          peso_atual?: number | null
+          posicao?: string | null
+          setor?: string | null
+          telefone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      avaliacoes: {
+        Row: {
+          atleta_id: string
+          created_at: string
+          data: string
+          id: string
+          nota: number
+          presenca: number
+        }
+        Insert: {
+          atleta_id: string
+          created_at?: string
+          data?: string
+          id?: string
+          nota: number
+          presenca?: number
+        }
+        Update: {
+          atleta_id?: string
+          created_at?: string
+          data?: string
+          id?: string
+          nota?: number
+          presenca?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "avaliacoes_atleta_id_fkey"
+            columns: ["atleta_id"]
+            isOneToOne: false
+            referencedRelation: "atletas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      historico_peso: {
+        Row: {
+          atleta_id: string
+          created_at: string
+          data: string
+          id: string
+          peso: number
+        }
+        Insert: {
+          atleta_id: string
+          created_at?: string
+          data?: string
+          id?: string
+          peso: number
+        }
+        Update: {
+          atleta_id?: string
+          created_at?: string
+          data?: string
+          id?: string
+          peso?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "historico_peso_atleta_id_fkey"
+            columns: ["atleta_id"]
+            isOneToOne: false
+            referencedRelation: "atletas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
