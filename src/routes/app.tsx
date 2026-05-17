@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { AthletesProvider } from "@/lib/athletes-store";
+import { RoleProvider, useRole, type Role } from "@/lib/role-context";
 import { useAuth } from "@/lib/auth-context";
 import { Bell, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,9 +11,11 @@ import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/app")({
   component: () => (
-    <AthletesProvider>
-      <AppGate />
-    </AthletesProvider>
+    <RoleProvider>
+      <AthletesProvider>
+        <AppGate />
+      </AthletesProvider>
+    </RoleProvider>
   ),
 });
 
@@ -38,6 +41,26 @@ function AppGate() {
   return <AppLayout />;
 }
 
+function RoleSwitcher() {
+  const { role, setRole } = useRole();
+  return (
+    <div className="inline-flex rounded-full border border-border bg-muted p-1 text-xs">
+      {(["atleta", "treinador"] as Role[]).map((r) => (
+        <button
+          key={r}
+          onClick={() => setRole(r)}
+          className={`rounded-full px-3 py-1 font-medium uppercase tracking-wider transition-colors ${
+            role === r ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
+          }`}
+          aria-pressed={role === r}
+        >
+          {r}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function AppLayout() {
   const { logout, user, role } = useAuth();
   const navigate = useNavigate();
@@ -56,6 +79,7 @@ function AppLayout() {
             </div>
             <div className="flex items-center gap-3">
               <span className="hidden text-xs text-muted-foreground sm:block">{user?.email}</span>
+              <RoleSwitcher />
               {role && (
                 <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   {role}
