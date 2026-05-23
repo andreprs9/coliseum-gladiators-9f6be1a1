@@ -114,9 +114,4 @@ export type MonitoringEntry = {
   notes: string;
 };
 
-export const initialMonitoring: MonitoringEntry[] = [
-  { id: "m-1", athleteId: "a-12", date: "2026-05-02", metric: "Velocidade", score: 78, notes: "Boa explosão nas 10 primeiras jardas, perde ritmo após 30." },
-  { id: "m-2", athleteId: "a-12", date: "2026-05-05", metric: "Técnica", score: 70, notes: "Refinar pegada em situação de pressão." },
-  { id: "m-3", athleteId: "a-12", date: "2026-05-08", metric: "Mental", score: 82, notes: "Excelente leitura pré-snap." },
-  { id: "m-4", athleteId: "a-01", date: "2026-05-06", metric: "Avaliação geral", score: 88, notes: "Liderança ofensiva consistente." },
-];
+export const initialMonitoring: MonitoringEntry[] = [];

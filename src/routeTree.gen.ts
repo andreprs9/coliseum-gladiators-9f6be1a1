@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TimeRouteImport } from './routes/time'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ElencoRouteImport } from './routes/elenco'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as CalendarioRouteImport } from './routes/calendario'
@@ -40,6 +41,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ElencoRoute = ElencoRouteImport.update({
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
   '/elenco': typeof ElencoRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/time': typeof TimeRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
   '/elenco': typeof ElencoRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/time': typeof TimeRoute
@@ -157,6 +165,7 @@ export interface FileRoutesById {
   '/calendario': typeof CalendarioRoute
   '/contato': typeof ContatoRoute
   '/elenco': typeof ElencoRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/reset-password': typeof ResetPasswordRoute
   '/time': typeof TimeRoute
@@ -178,6 +187,7 @@ export interface FileRouteTypes {
     | '/calendario'
     | '/contato'
     | '/elenco'
+    | '/forgot-password'
     | '/login'
     | '/reset-password'
     | '/time'
@@ -196,6 +206,7 @@ export interface FileRouteTypes {
     | '/calendario'
     | '/contato'
     | '/elenco'
+    | '/forgot-password'
     | '/login'
     | '/reset-password'
     | '/time'
@@ -215,6 +226,7 @@ export interface FileRouteTypes {
     | '/calendario'
     | '/contato'
     | '/elenco'
+    | '/forgot-password'
     | '/login'
     | '/reset-password'
     | '/time'
@@ -235,6 +247,7 @@ export interface RootRouteChildren {
   CalendarioRoute: typeof CalendarioRoute
   ContatoRoute: typeof ContatoRoute
   ElencoRoute: typeof ElencoRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   TimeRoute: typeof TimeRoute
@@ -261,6 +274,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/elenco': {
@@ -396,6 +416,7 @@ const rootRouteChildren: RootRouteChildren = {
   CalendarioRoute: CalendarioRoute,
   ContatoRoute: ContatoRoute,
   ElencoRoute: ElencoRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   TimeRoute: TimeRoute,
