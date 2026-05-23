@@ -108,11 +108,7 @@ function JogosPage() {
                   <div className="flex items-center gap-2">
                     <Button
                       size="sm"
-                      variant={
-                        e.confirmed === "sim"
-                          ? "positive"
-                          : "default"
-                      }
+                      variant={e.confirmed === "sim" ? "default" : "outline"}
                       onClick={() => setConfirm(e.id, "sim")}
                     >
                       <Check className="mr-1 h-4 w-4" />
@@ -121,11 +117,7 @@ function JogosPage() {
 
                     <Button
                       size="sm"
-                      variant={
-                        e.confirmed === "nao"
-                          ? "negative"
-                          : "default"
-                      }
+                      variant={e.confirmed === "nao" ? "destructive" : "outline"}
                       onClick={() => setConfirm(e.id, "nao")}
                     >
                       <X className="mr-1 h-4 w-4" />
