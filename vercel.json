@@ -1,8 +1,14 @@
 {
   "buildCommand": "vite build",
-  "outputDirectory": "dist",
-  "framework": "vite",
+  "outputDirectory": ".output/public",
+  "framework": null,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+    { "source": "/(.*)", "destination": "/api/index" }
+  ],
+  "functions": {
+    "api/index.ts": {
+      "includeFiles": "dist/server/**/*",
+      "maxDuration": 10
+    }
+  }
 }
