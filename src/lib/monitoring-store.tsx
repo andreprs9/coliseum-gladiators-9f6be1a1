@@ -15,30 +15,11 @@ export type MonitoringState = {
 const KEY = "gladiators.monitoring.v2";
 const LEGACY_KEY = "gladiators.monitoring";
 
-const seedWeights: WeightEntry[] = [
-  { id: "w-1", athleteId: "a-12", date: "2026-03-01", weightKg: 88 },
-  { id: "w-2", athleteId: "a-12", date: "2026-03-15", weightKg: 87 },
-  { id: "w-3", athleteId: "a-12", date: "2026-04-01", weightKg: 86 },
-  { id: "w-4", athleteId: "a-12", date: "2026-04-20", weightKg: 85 },
-  { id: "w-5", athleteId: "a-12", date: "2026-05-05", weightKg: 84 },
-  { id: "w-6", athleteId: "a-01", date: "2026-04-10", weightKg: 92 },
-  { id: "w-7", athleteId: "a-01", date: "2026-05-01", weightKg: 91 },
-];
-
-const seedTech: TechNote[] = [
-  { id: "tn-1", athleteId: "a-12", date: "2026-04-28", skill: "Recepção em movimento", rating: 8, note: "Mãos firmes em rotas curtas; refinar pegada acima da cabeça." },
-  { id: "tn-2", athleteId: "a-12", date: "2026-05-05", skill: "Leitura de cobertura", rating: 7, note: "Identifica Cover 3 bem; tem dificuldade com disfarces de safety." },
-];
-
-const seedGeneral: GeneralNote[] = [
-  { id: "g-1", athleteId: "a-12", date: "2026-05-01", note: "Atleta engajado, chega 15min antes dos treinos." },
-];
-
 const initialState: MonitoringState = {
   metrics: initialMonitoring,
-  weights: seedWeights,
-  techNotes: seedTech,
-  generalNotes: seedGeneral,
+  weights: [],
+  techNotes: [],
+  generalNotes: [],
 };
 
 function load(): MonitoringState {
